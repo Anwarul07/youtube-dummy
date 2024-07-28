@@ -1,9 +1,28 @@
-import React from 'react'
+import React, { useEffect } from "react";
+import { YoutubeApi } from "./Contanst";
+import { useState } from "react";
+import VideoCards from "./VideoCards";
 
 const VideoContainer = () => {
-  return (
-    <div>VideoContainer</div>
-  )
-}
+  const [videos, setVideos] = useState([]);
+  useEffect(() => {
+    getVideos();
+  }, []);
 
-export default VideoContainer
+  const getVideos = async () => {
+    const data = await fetch(YoutubeApi);
+    const json = await data.json();
+    console.log(json.items);
+    setVideos(json.items);
+  };
+
+  return (
+    <div className="flex flex-wrap">
+      {videos.map((video) => (
+        <VideoCards key={video.id} info={video} />
+      ))}
+    </div>
+  );
+};
+
+export default VideoContainer;
