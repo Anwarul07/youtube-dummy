@@ -1,7 +1,13 @@
 import React from "react";
+import { useSelector } from "react-redux";
+// import Store from "./Utils/Store";
 // import './App.css';
 
 const Sidebar = () => {
+  const IsOpen=useSelector((Store)=>Store.app.IsOpen);
+
+  //Early Return
+  if(!IsOpen) return null;
   return (
     <div className="w-48 shadow-xl font-semibold px-6">
       {/* <h1 className="font-bold mt-2">Subscriptions</h1> */}
