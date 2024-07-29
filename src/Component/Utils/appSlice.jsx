@@ -9,8 +9,11 @@ reducers:{
     toggleMenu:(state)=>{
         state.IsOpen=!state.IsOpen;
     },
+    closeMenu:(state)=>{
+        state.IsOpen= false;
+    },
 }
 })
 
-export const {toggleMenu}=appSlice.actions;
+export const {toggleMenu, closeMenu}=appSlice.actions;
 export default appSlice.reducer;
