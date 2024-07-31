@@ -4,6 +4,7 @@ import { closeMenu } from "./Utils/appSlice";
 import { useParams } from "react-router-dom";
 import { useSearchParams } from "react-router-dom";
 import { combineSlices } from "@reduxjs/toolkit";
+import CommentsContainer from "./CommentsContainer";
 
 const Watchpage = () => {
   const [searchParams] = useSearchParams();
@@ -14,7 +15,8 @@ const Watchpage = () => {
     dispatch(closeMenu());
   }, []);
   return (
-    <div className=" px-4">
+   <div className="flex flex-col">
+     <div className=" px-4">
       <iframe
         width="950"
         height="420"
@@ -26,6 +28,8 @@ const Watchpage = () => {
         allowfullscreen
       ></iframe>
     </div>
+    <CommentsContainer/>
+   </div>
   );
 };
 
