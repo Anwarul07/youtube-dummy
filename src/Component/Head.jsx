@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { toggleMenu } from "./Utils/appSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { YoutubeSuggestionApi } from "./Contanst";
+import { cacheResults } from "./Utils/searchSlice";
 // import './App.css';
 
 const Head = () => {
@@ -9,8 +10,15 @@ const Head = () => {
   const [showSuggest, setShowSuggest] = useState([]);
   const [showOption, setShowOption] = useState(false);
 
+  const searchCacher = useSelector((store) => store.search);
   useEffect(() => {
-    const timer = setTimeout(() => getSuggesion(), 200);
+    const timer = setTimeout(() => {
+      if (searchCacher[searchQuery]) {
+        setShowSuggest(searchCacher[searchQuery]);
+      } else {
+        getSuggesion();
+      }
+    }, 200);
 
     return () => {
       clearTimeout(timer);
@@ -22,6 +30,12 @@ const Head = () => {
     const json = await data.json();
     console.log("API calls : " + searchQuery);
     setShowSuggest(json[1]);
+
+    dispatch(
+      cacheResults({
+        [searchQuery]: json[1],
+      })
+    );
   };
 
   const dispatch = useDispatch();
@@ -52,8 +66,8 @@ const Head = () => {
             placeholder="Search"
             value={searchQuery}
             onChange={(e) => setSearhQuery(e.target.value)}
-            onFocus={()=>setShowOption(true)}
-            onBlur={()=>setShowOption(false)}
+            onFocus={() => setShowOption(true)}
+            onBlur={() => setShowOption(false)}
           />
           <button className="border border-gray-900 w-10 h-10 pb-3 rounded-r-full">
             <img
