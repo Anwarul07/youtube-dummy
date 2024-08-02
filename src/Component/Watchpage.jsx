@@ -5,31 +5,37 @@ import { useParams } from "react-router-dom";
 import { useSearchParams } from "react-router-dom";
 import { combineSlices } from "@reduxjs/toolkit";
 import CommentsContainer from "./CommentsContainer";
+import LiveChat from "./LiveChat";
 
 const Watchpage = () => {
   const [searchParams] = useSearchParams();
-  console.log(searchParams.get(("v")));
+  // console.log(searchParams.get(("v")));
 
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(closeMenu());
   }, []);
   return (
-   <div className="flex flex-col">
-     <div className=" px-4">
-      <iframe
-        width="950"
-        height="420"
-        src={"https://www.youtube.com/embed/"+ searchParams.get(("v"))}
-        title="YouTube video player"
-        frameborder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-        referrerpolicy="strict-origin-when-cross-origin"
-        allowfullscreen
-      ></iframe>
+    <div className="flex flex-col w-full">
+      <div className=" px-4 flex">
+        <div>
+          <iframe
+            width="950"
+            height="420"
+            src={"https://www.youtube.com/embed/" + searchParams.get("v")}
+            title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+          ></iframe>
+        </div>
+        <div className="w-full">
+          <LiveChat/>
+        </div>
+      </div>
+      <CommentsContainer />
     </div>
-    <CommentsContainer/>
-   </div>
   );
 };
 
