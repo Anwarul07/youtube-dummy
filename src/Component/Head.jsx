@@ -28,7 +28,7 @@ const Head = () => {
   const getSuggesion = async () => {
     const data = await fetch(YoutubeSuggestionApi + searchQuery);
     const json = await data.json();
-    console.log("API calls : " + searchQuery);
+    // console.log("API calls : " + searchQuery);
     setShowSuggest(json[1]);
 
     dispatch(
